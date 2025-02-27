@@ -11,7 +11,9 @@ transform = transforms.Compose([
     transforms.Normalize((0.5,), (0.5,))
 ])
 
-test_dataset = datasets.MNIST(root='./dataset/test-data', train=False, download=True, transform=transform)
+data_path = '/tmp/data/mnist'
+
+test_dataset = datasets.MNIST(data_path, train=False, download=True, transform=transform)
 test_loader = DataLoader(test_dataset, batch_size=10, shuffle=True)
 
 class o1Net(nn.Module):
@@ -31,7 +33,7 @@ class o1Net(nn.Module):
         return x
     
 model = o1Net()
-best_model_path = 'best_mnist_model.pth'
+best_model_path = './best_mnist_model.pth'
 model.load_state_dict(torch.load(best_model_path))
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
